@@ -29,12 +29,7 @@ workflows:
           xcode-project build-ipa \
             --workspace "$CM_BUILD_DIR/Farova.xcworkspace" \
             --scheme "Farova" \
-            -- \
-            DEVELOPMENT_TEAM=4676423LZC \
-            CODE_SIGN_STYLE=Manual \
-            CODE_SIGN_IDENTITY="iPhone Distribution" \
-            "PROVISIONING_PROFILE_SPECIFIER=635c1a79-7daf-4c8e-b162-26b6ea9ed861" \
-            SUPPORTS_MACCATALYST=NO
+            --config Release
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
