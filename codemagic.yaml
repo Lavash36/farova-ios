@@ -3,14 +3,11 @@ workflows:
     name: iOS TestFlight
     max_build_duration: 60
     environment:
+      groups:
+        - ios-signing
       ios_signing:
         distribution_type: app_store
         bundle_identifier: app.farova
-      vars:
-        APP_STORE_CONNECT_ISSUER_ID: $APP_STORE_CONNECT_ISSUER_ID
-        APP_STORE_CONNECT_KEY_IDENTIFIER: $APP_STORE_CONNECT_KEY_IDENTIFIER
-        APP_STORE_CONNECT_PRIVATE_KEY: $APP_STORE_CONNECT_PRIVATE_KEY
-        CERTIFICATE_PRIVATE_KEY: $CERTIFICATE_PRIVATE_KEY
       xcode: latest
       cocoapods: default
     scripts:
