@@ -5,12 +5,21 @@ workflows:
     environment:
       groups:
         - ios-signing
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: app.farova
       xcode: latest
       cocoapods: default
     scripts:
+      - name: Set up keychain
+        script: keychain initialize
+      - name: Set up provisioning profile
+        script: |
+          PROFILES_HOME="$HOME/Library/MobileDevice/Provisioning Profiles"
+          mkdir -p "$PROFILES_HOME"
+          echo $FCI_PROVISIONING_PROFILE | base64 --decode > "$PROFILES_HOME/farova_app_store.mobileprovision"
+          echo "Provisioning profile installed"
+      - name: Import signing certificate
+        script: |
+          echo $FCI_CERTIFICATE | base64 --decode > /tmp/certificate.p12
+          keychain add-certificates --certificate /tmp/certificate.p12 --certificate-password $FCI_CERTIFICATE_PASSWORD
       - name: Install CocoaPods
         script: pod install
       - name: Set up code signing
